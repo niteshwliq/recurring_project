@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Interactive Project Analysis</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        h1 {
+            color: #005A9C;
+            text-align: center;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 15px;
+            margin-bottom: 10px;
+        }
+        h2 {
+            color: #17a2b8;
+            margin-top: 40px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            font-size: 1.1em;
+            color: #6c757d;
+            margin-top: 0;
+            margin-bottom: 30px;
+        }
+
+        /* --- Accordion Styles --- */
+        .accordion-button {
+            background-color: #f1f1f1;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            text-align: left;
+            border: none;
+            outline: none;
+            transition: background-color 0.4s ease;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-top: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .accordion-button:hover, .accordion-button.active {
+            background-color: #e0e9f5;
+        }
+
+        .accordion-button .icon::after {
+            content: '+';
+            font-size: 1.3em;
+            color: #005A9C;
+        }
+
+        .accordion-button.active .icon::after {
+            content: "−";
+        }
+        
+        .accordion-title {
+            flex-grow: 1;
+        }
+
+        .accordion-panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+            border: 1px solid #e0e9f5;
+            border-top: none;
+        }
+        
+        .accordion-panel table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .accordion-panel th, .accordion-panel td {
+            border: 1px solid #dee2e6;
+            padding: 8px 12px;
+            text-align: left;
+            font-size: 0.95em;
+        }
+        .accordion-panel th {
+            background-color: #e9ecef;
+        }
+        .count {
+            font-weight: normal;
+            color: #6c757d;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        
+        /* --- Package Cards --- */
+        .packages-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+        .package-card {
+            background: #fff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+        .package-card h3 { margin-top: 0; color: #005A9C; font-size: 1.2em; }
+        .package-card ul { padding-left: 20px; flex-grow: 1; }
+        .package-card .turnaround {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #ced4da;
+            font-weight: 600;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Complete Interactive Ad-Hoc Project Analysis</h1>
+    <p class="subtitle">Click on each category to drill down into the specific project details.</p>
+
+    <h2>Top Recurring Task Categories & Projects</h2>
+
+    <!-- Accordion Item 1 -->
+    <button class="accordion-button">
+        <span class="accordion-title">Website Maintenance & Critical Fixes<span class="count">(Count: 11)</span></span>
+        <span class="icon"></span>
+    </button>
+    <div class="accordion-panel">
+        <table>
+            <thead><tr><th>Project #</th><th>Project Name</th><th>Agency</th><th>Owner</th></tr></thead>
+            <tbody>
+                <tr><td>15786</td><td>Practical Machinist Website Down</td><td>Practical Machinist</td><td>Caitlin Sims</td></tr>
+                <tr><td>15909</td><td>Mosaic Website - critical error</td><td>Mosaic Media</td><td>Jessica Wagner</td></tr>
+                <tr><td>15817</td><td>Carlson's Choketubes- Critical Error</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>14865</td><td>Brule, Nault & Hainley Site Down</td><td>Main St. Media</td><td>Ellen Thomas</td></tr>
+                <tr><td>15461</td><td>Lindsay- Site Keeps Going Down</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+                <tr><td>15420</td><td>Lindsay- Site Down</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+                <tr><td>15424</td><td>LoSasso Website Blocked</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+                <tr><td>14378</td><td>Lindsay Server - Ad-Hocs</td><td>LoSasso</td><td>Jeannette Bierman</td></tr>
+                <tr><td>15807</td><td>Hosting troubleshooting work</td><td>A Brave New Agency</td><td>Jessica Wagner</td></tr>
+                <tr><td>15310</td><td>Bai.NorthstarIdeas Locked Out</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>14372</td><td>YMCA of Pawtucket Site Malfunction</td><td>Main St. Media</td><td>Ellen Thomas</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Accordion Item 2 -->
+    <button class="accordion-button">
+        <span class="accordion-title">Forms & Data Submission Issues<span class="count">(Count: 10)</span></span>
+        <span class="icon"></span>
+    </button>
+    <div class="accordion-panel">
+        <table>
+            <thead><tr><th>Project #</th><th>Project Name</th><th>Agency</th><th>Owner</th></tr></thead>
+            <tbody>
+                <tr><td>15752</td><td>Lindsay- Website Inquiry Forms Issue</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+                <tr><td>15741</td><td>Lindsay- Brazil Web Forms Not Working</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+                <tr><td>15496</td><td>Brown Fertility- Gravity Forms Issue</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>14713</td><td>Butler & Messier New Form</td><td>Main St. Media</td><td>Ellen Thomas</td></tr>
+                <tr><td>15450</td><td>Radiant Mortgage- Add Checkbox to form</td><td>Radiant Mortgage</td><td>Caitlin Sims</td></tr>
+                <tr><td>15077</td><td>CODAC Form and Site Speed</td><td>Main St. Media</td><td>Ellen Thomas</td></tr>
+                <tr><td>14619</td><td>MicroConnex.com- Gravity Forrms Notifications</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15586</td><td>Orders not exporting (0121)</td><td>Digital Velocity</td><td>Ellen Thomas</td></tr>
+                <tr><td>15847</td><td>Lindsay- Job Application Issue</td><td>LoSasso</td><td>Hiten Upadhyay</td></tr>
+                <tr><td>15489</td><td>Heidenhain Website Form Issue</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Accordion Item 3 -->
+    <button class="accordion-button">
+        <span class="accordion-title">Content, Staging & Deployment Updates<span class="count">(Count: 9)</span></span>
+        <span class="icon"></span>
+    </button>
+    <div class="accordion-panel">
+        <table>
+            <thead><tr><th>Project #</th><th>Project Name</th><th>Agency</th><th>Owner</th></tr></thead>
+            <tbody>
+                <tr><td>15881</td><td>Opportunity Austin- Push stage to live</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15834</td><td>Opportunity Austin- Copy live to staging</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15082</td><td>Verus Website updates</td><td>K2MD</td><td>Jessica Wagner</td></tr>
+                <tr><td>15572</td><td>TSIB Updates Page</td><td>Thinkdm2</td><td>Jessica Wagner</td></tr>
+                <tr><td>15416</td><td>Check Out page verbiage changes</td><td>Digital Velocity</td><td>Ellen Thomas</td></tr>
+                <tr><td>15122</td><td>A Brave New Website Edits - Ad-Hocs</td><td>A Brave New Agency</td><td>Jessica Wagner</td></tr>
+                <tr><td>15717</td><td>Verus Website Updates - Terms and Conditions page</td><td>K2MD</td><td>Jessica Wagner</td></tr>
+                <tr><td>15588</td><td>Dayglow Coffee website - changes</td><td>November Press</td><td>Jessica Wagner</td></tr>
+                <tr><td>15304</td><td>FBT Architects Location Update</td><td>K2MD</td><td>Jessica Wagner</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Accordion Item 4 -->
+    <button class="accordion-button">
+        <span class="accordion-title">Analytics & Tracking<span class="count">(Count: 9)</span></span>
+        <span class="icon"></span>
+    </button>
+    <div class="accordion-panel">
+        <table>
+            <thead><tr><th>Project #</th><th>Project Name</th><th>Agency</th><th>Owner</th></tr></thead>
+            <tbody>
+                <tr><td>15914</td><td>Hanalei Bay Resort: Google Search Console</td><td>Grand Pacific Resorts</td><td>Jessica Wagner</td></tr>
+                <tr><td>15193</td><td>Vista Mirage Resort: Google Analytics and Tag Manger</td><td>Grand Pacific Resorts</td><td>Jessica Wagner</td></tr>
+                <tr><td>14890</td><td>LaGuardia Airport's Google Analytics and Tag Manager</td><td>Thinkdm2</td><td>Jessica Wagner</td></tr>
+                <tr><td>15736</td><td>Thomas Flint - UTM Parameters</td><td>Thinkdm2</td><td>Jessica Wagner</td></tr>
+                <tr><td>14800</td><td>TSIB Google Analytics - Question</td><td>Thinkdm2</td><td>Jessica Wagner</td></tr>
+                <tr><td>14565</td><td>APP Conversion Tracking</td><td>Tribal Vision</td><td>Jessica Wagner</td></tr>
+                <tr><td>15462</td><td>GTM + Digital Media Team Meeting Request</td><td>A Brave New Agency</td><td>Jessica Wagner</td></tr>
+                <tr><td>15446</td><td>Dailys.com- Add tracking pixel</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15221</td><td>TSIB HubSpot Blog Issues</td><td>Thinkdm2</td><td>Jessica Wagner</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Accordion Item 5 -->
+    <button class="accordion-button">
+        <span class="accordion-title">Email Marketing & Template Support<span class="count">(Count: 9)</span></span>
+        <span class="icon"></span>
+    </button>
+    <div class="accordion-panel">
+        <table>
+            <thead><tr><th>Project #</th><th>Project Name</th><th>Agency</th><th>Owner</th></tr></thead>
+            <tbody>
+                <tr><td>15938</td><td>103587 - Kugler... eBlast</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15793</td><td>103293 - Kugler... eBlast</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15734</td><td>103212 - Cashco... eBlast</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15861</td><td>Dynaroll- Email Update</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15891</td><td>Stellar- HTML Email</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15560</td><td>Radiant Mortgage- HTML Email Edits</td><td>Radiant Mortgage</td><td>Caitlin Sims</td></tr>
+                <tr><td>15818</td><td>PECAA- Max Promo HTML Email</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15716</td><td>Carlson's Choke Tubes SendGrid SMTP issue - HOT</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15279</td><td>Toys R Us Mailchimp Connection</td><td>Overskies</td><td>Caitlin Sims</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Accordion Item 6 -->
+    <button class="accordion-button">
+        <span class="accordion-title">Security & Plugin Management<span class="count">(Count: 10)</span></span>
+        <span class="icon"></span>
+    </button>
+    <div class="accordion-panel">
+        <table>
+            <thead><tr><th>Project #</th><th>Project Name</th><th>Agency</th><th>Owner</th></tr></thead>
+            <tbody>
+                <tr><td>15922</td><td>Brushart.com Active Threat Report</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15774</td><td>BAC_brushart.com_Active Threat Monitoring Report</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15376</td><td>Amphenol-CIT- WP Engine Security_ Plugin Vulnerability</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15805</td><td>Lindsay- Microsoft OAuth Setup</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+                <tr><td>15388</td><td>Lindsay- Wildcard Certificate</td><td>LoSasso</td><td>Caitlin Sims</td></tr>
+                <tr><td>15602</td><td>Brown Fertility- Install Wordfence</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+                <tr><td>15073</td><td>WP Download Manager Plugin Research</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15775</td><td>Plantnetics- Spam Issues in Comments</td><td>Brush Art</td><td>Caitlin Sims</td></tr>
+                <tr><td>15477</td><td>BMS- FTP Access Issues</td><td>Bonfire Effect</td><td>Caitlin Sims</td></tr>
+                <tr><td>15563</td><td>Dynaroll- SSL Certificate Re-check</td><td>High Reason</td><td>Caitlin Sims</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <h2>Proposed "Mini-Packages" for Sales Enablement</h2>
+    <div class="packages-container">
+        <div class="package-card">
+            <h3>1. The Website Health & Security Shield</h3>
+            <ul>
+                <li>Daily uptime monitoring & alerts</li>
+                <li>Weekly safe updates (plugins, themes) on staging</li>
+                <li>Monthly security scans & vulnerability reports</li>
+                <li>Includes 2 hours of reactive support</li>
+            </ul>
+            <p class="turnaround">Structure: Monthly Subscription</p>
+        </div>
+        <div class="package-card">
+            <h3>2. The Lead-Gen Form Fixer</h3>
+            <ul>
+                <li>Audit of up to 5 core website forms</li>
+                <li>Test submission notifications & integrations</li>
+                <li>Spam protection review & implementation</li>
+                <li>Fix one specific, documented form bug</li>
+            </ul>
+            <p class="turnaround">Typical Turnaround: 3-5 Business Days</p>
+        </div>
+        <div class="package-card">
+            <h3>3. The Analytics Quick-Start</h3>
+            <ul>
+                <li>GA4 & GTM container installation</li>
+                <li>Standard event tracking (clicks, downloads)</li>
+                <li>One-page Looker Studio dashboard</li>
+                <li>Conversion goal verification</li>
+            </ul>
+            <p class="turnaround">Typical Turnaround: 5-7 Business Days</p>
+        </div>
+        <div class="package-card">
+            <h3>4. The HTML Email Tune-Up</h3>
+            <ul>
+                <li>Code one responsive HTML email template</li>
+                <li>Test across major email clients</li>
+                <li>Troubleshoot a specific deliverability issue (e.g., SMTP, SPF/DKIM)</li>
+            </ul>
+            <p class="turnaround">Typical Turnaround: 2-4 Business Days</p>
+        </div>
+        <div class="package-card">
+            <h3>5. The Content Update Bucket</h3>
+            <ul>
+                <li>Pre-paid block of 5, 10, or 20 hours</li>
+                <li>Used for text/image changes, blog posts, new simple pages, staging deployments</li>
+            </ul>
+            <p class="turnaround">Structure: Retainer (Hours expire quarterly)</p>
+        </div>
+        <div class="package-card">
+            <h3>6. The Site Handoff & Archive Kit</h3>
+            <ul>
+                <li>Full backup of website files & database</li>
+                <li>Create document with key credentials/info</li>
+                <li>Package all assets for client delivery</li>
+                <li>Support for ownership/hosting transfer</li>
+            </ul>
+            <p class="turnaround">Typical Turnaround: 3 Business Days</p>
+        </div>
+        <div class="package-card">
+            <h3>7. The UI/UX Bug Squasher</h3>
+            <ul>
+                <li>Fix one specific front-end issue</li>
+                <li>Ex: Mobile menu bug, element styling, hero image issue, Elementor conflict</li>
+            </ul>
+            <p class="turnaround">Typical Turnaround: 2-5 Business Days</p>
+        </div>
+    </div>
+</div>
+
+<script>
+    var acc = document.getElementsByClassName("accordion-button");
+    for (var i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
