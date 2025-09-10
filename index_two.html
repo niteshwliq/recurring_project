@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BCI Burke - Audience Journey Prototype</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        :root {
+            --primary-color: #6a0dad; /* Burke Purple */
+            --secondary-color: #4a4a4a;
+            --background-color: #f9f9f9;
+            --card-bg-color: #ffffff;
+            --accent-color: #00c497;
+            --enhancement-bg: #e6fff9;
+            --border-color: #e0e0e0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background-color: var(--background-color);
+            color: var(--secondary-color);
+            line-height: 1.6;
+        }
+        
+        body.modal-open {
+            overflow: hidden; /* Prevent background scrolling when modal is open */
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            padding: 40px 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .header .logo {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+            line-height: 1;
+        }
+
+        .header .tagline {
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-top: 5px;
+            font-weight: 600;
+        }
+        
+        .header h1 {
+            margin-top: 30px;
+            font-size: 2rem;
+            color: #333;
+        }
+        
+        .header p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 10px auto 0;
+        }
+
+        .audience-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .audience-card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+
+        .audience-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
+        }
+        
+        .audience-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.4rem;
+        }
+        
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .modal-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg-color);
+            padding: 40px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 900px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.visible .modal-content {
+            transform: scale(1);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #aaa;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .modal-close:hover {
+            color: #333;
+        }
+
+        .modal-content h2 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-top: 0;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+        
+        .modal-content p {
+            font-size: 1.1rem;
+        }
+
+        .content-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .content-split {
+                grid-template-columns: 1fr;
+            }
+             .modal-content {
+                padding: 25px;
+            }
+        }
+
+        .content-split h4 {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .resource-list, .enhancement-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .resource-list li, .enhancement-list li {
+            margin-bottom: 12px;
+            padding-left: 28px;
+            position: relative;
+        }
+
+        .resource-list li::before {
+            content: '🔗';
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        .enhancement-list li {
+            background-color: var(--enhancement-bg);
+            padding: 10px 15px 10px 35px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .enhancement-list li::before {
+            content: '💡';
+            color: var(--accent-color);
+            position: absolute;
+            left: 10px;
+            top: 12px;
+        }
+
+        .resource-list a {
+            text-decoration: none;
+            color: var(--primary-color);
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .resource-list a:hover {
+            color: #333;
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h2 class="logo">Burke</h2>
+            <p class="tagline">PLAY THAT MOVES YOU</p>
+            <h1>Audience Journey Prototype</h1>
+            <p>This interactive demo showcases the proposed audience-centric web experience. Select a role below to view the tailored landing page strategy designed for their specific needs.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section id="audience-selector">
+            <div class="audience-grid">
+                <!-- Card 1 -->
+                <div class="audience-card" data-target="parks-rec">
+                    <h3>Parks & Recreation</h3>
+                    <p>For municipal departments focused on community engagement, durability, and public fitness.</p>
+                </div>
+                <!-- Card 2 -->
+                <div class="audience-card" data-target="schools-daycares">
+                    <h3>Schools & Daycares</h3>
+                    <p>For educators focused on child development, safety, and integrating play with learning.</p>
+                </div>
+                <!-- Card 3 -->
+                <div class="audience-card" data-target="architects">
+                    <h3>Landscape Architects</h3>
+                    <p>For design professionals who need technical specs, CAD files, and aesthetic flexibility.</p>
+                </div>
+                <!-- Card 4 -->
+                <div class="audience-card" data-target="community">
+                    <h3>HOAs, Churches & PTOs</h3>
+                    <p>For community leaders who need budget-friendly solutions and fundraising support.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modal Dialogs -->
+    <div id="parks-rec-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Audience: Parks & Recreation</h2>
+            <p><strong>Page Description:</strong> This page is tailored for municipal park and recreation departments and public space planners. It will emphasize BCI Burke's expertise in creating durable, safe, and engaging play environments that serve diverse community needs, from active play to inclusive design and fitness solutions.</p>
+            <div class="content-split">
+                <div>
+                    <h4>Current Resources</h4>
+                    <ul class="resource-list">
+                        <li><a href="https://www.bciburke.com/markets/park-playground-equipment/" target="_blank">Park Playground Equipment</a></li>
+                        <li><a href="https://www.bciburke.com/products/outdoor-fitness/" target="_blank">Outdoor Fitness</a></li>
+                        <li><a href="https://www.bciburke.com/products/dog-park-equipment/" target="_blank">Dog Park Equipment</a></li>
+                        <li><a href="https://www.bciburke.com/design-ideas/inclusive-playground-design/" target="_blank">Inclusive Playground Design</a></li>
+                        <li><a href="https://www.bciburke.com/products/site-amenities/" target="_blank">Site Amenities</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Proposed Enhancements</h4>
+                    <ul class="enhancement-list">
+                        <li>Develop a "Funding & Grants" resource center.</li>
+                        <li>Showcase ROI/Impact studies on community engagement.</li>
+                        <li>Highlight sustainability and eco-friendly materials.</li>
+                        <li>Create in-depth guides on maintenance for high-traffic areas.</li>
+                        <li>Feature video testimonials from Park Directors.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="schools-daycares-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Audience: Schools & Daycares</h2>
+            <p><strong>Page Description:</strong> This page is for school administrators, PTOs, and daycare directors. It will highlight how BCI Burke provides educational, safe, and developmentally appropriate play structures that support physical, social-emotional, and cognitive development.</p>
+            <div class="content-split">
+                <div>
+                    <h4>Current Resources</h4>
+                    <ul class="resource-list">
+                         <li><a href="https://www.bciburke.com/markets/school-playground-equipment/" target="_blank">School Playground Equipment</a></li>
+                        <li><a href="https://www.bciburke.com/markets/childcare-playground-equipment/" target="_blank">Childcare Playground Equipment</a></li>
+                        <li><a href="https://www.bciburke.com/design-ideas/outdoor-classroom-gallery/" target="_blank">Outdoor Classroom Gallery</a></li>
+                        <li><a href="https://www.bciburke.com/products/playground-equipment/early-childhood-play/" target="_blank">Early Childhood Play (6-23 mo)</a></li>
+                        <li><a href="https://www.bciburke.com/resources/fund-your-playground/" target="_blank">Fund Your Playground</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Proposed Enhancements</h4>
+                    <ul class="enhancement-list">
+                        <li>Filter solutions by specific age groups (preschool, elementary).</li>
+                        <li>Provide curriculum integration ideas for educators.</li>
+                        <li>Build a comprehensive fundraising support toolkit for PTOs.</li>
+                        <li>Add testimonials from teachers and educators.</li>
+                        <li>Offer detailed guides on safety and compliance standards.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="architects-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Audience: Landscape Architects</h2>
+            <p><strong>Page Description:</strong> This page targets professional landscape architects and design firms. It will focus on innovative design, aesthetic integration, and collaborative partnership, showcasing customizable products, high-quality materials, and essential technical specifications.</p>
+            <div class="content-split">
+                <div>
+                    <h4>Current Resources</h4>
+                    <ul class="resource-list">
+                        <li><a href="https://www.bciburke.com/markets/landscape-architect-playgrounds/" target="_blank">Landscape Architect Playgrounds</a></li>
+                        <li><a href="https://www.bciburke.com/resources/continuing-education/" target="_blank">Continuing Education</a></li>
+                        <li><a href="https://www.bciburke.com/design-ideas/photo-gallery/" target="_blank">Photo Gallery (Inspiration)</a></li>
+                        <li><a href="https://www.bciburke.com/design-ideas/playground-color-selector/" target="_blank">Playground Color Selector</a></li>
+                        <li><a href="https://www.bciburke.com/resources/catalogs/" target="_blank">Catalogs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Proposed Enhancements</h4>
+                    <ul class="enhancement-list">
+                        <li>Create a dedicated portal for downloadable CAD/BIM files.</li>
+                        <li>Build a curated design gallery for inspiration.</li>
+                        <li>Provide detailed material palettes and customization options.</li>
+                        <li>Offer accredited Continuing Education Units (CEUs) via webinars.</li>
+                        <li>Clearly outline the project collaboration and support process.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="community-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <h2>Audience: HOAs, Churches & PTOs</h2>
+            <p><strong>Page Description:</strong> Tailored for community leaders and volunteers, this page addresses the challenges of developing communal play spaces. It focuses on budget-friendly solutions, fundraising support, and ease of project management to foster community spirit.</p>
+            <div class="content-split">
+                <div>
+                    <h4>Current Resources</h4>
+                    <ul class="resource-list">
+                        <li><a href="https://www.bciburke.com/markets/apartment-hoa-playground-equipment/" target="_blank">Apartment & HOA Playgrounds</a></li>
+                        <li><a href="https://www.bciburke.com/markets/church-playground-equipment/" target="_blank">Church Playgrounds</a></li>
+                        <li><a href="https://www.bciburke.com/resources/planning-your-playground/" target="_blank">Planning Your Playground</a></li>
+                        <li><a href="https://www.bciburke.com/resources/fund-your-playground/" target="_blank">Fund Your Playground</a></li>
+                        <li><a href="https://www.bciburke.com/resources/purchasing-contracts/" target="_blank">Purchasing Contracts</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Proposed Enhancements</h4>
+                    <ul class="enhancement-list">
+                        <li>Offer downloadable fundraising toolkits and templates.</li>
+                        <li>Provide volunteer installation guides and checklists.</li>
+                        <li>Create an interactive project planning and budgeting tool.</li>
+                        <li>Showcase community success stories and testimonials.</li>
+                        <li>Simplify information on navigating project approvals.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <footer class="footer">
+        <p>BCI Burke Audience Journey Prototype | Confidential</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.audience-card');
+            const body = document.body;
+
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const targetId = this.getAttribute('data-target') + '-modal';
+                    const modal = document.getElementById(targetId);
+                    if (modal) {
+                        modal.classList.add('visible');
+                        body.classList.add('modal-open');
+                    }
+                });
+            });
+
+            document.querySelectorAll('.modal-close').forEach(button => {
+                button.addEventListener('click', function() {
+                    this.closest('.modal-overlay').classList.remove('visible');
+                    body.classList.remove('modal-open');
+                });
+            });
+
+            document.querySelectorAll('.modal-overlay').forEach(overlay => {
+                overlay.addEventListener('click', function(event) {
+                    if (event.target === this) {
+                        this.classList.remove('visible');
+                        body.classList.remove('modal-open');
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
