@@ -3,244 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BCI Burke - Audience Journey Prototype</title>
+    <title>BCI Burke - Visionary Audience Prototype</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&display=swap');
+        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css');
 
         :root {
-            --primary-color: #6a0dad; /* Burke Purple */
+            --primary-color: #6a0dad;
             --secondary-color: #4a4a4a;
-            --background-color: #f9f9f9;
+            --background-color: #f8f9fa;
             --card-bg-color: #ffffff;
             --accent-color: #00c497;
-            --enhancement-bg: #e6fff9;
             --border-color: #e0e0e0;
+            --expert-note-bg: #fffbe6;
+            --expert-note-border: #ffe58f;
+            
+            --parks-color: #3498db;
+            --schools-color: #f1c40f;
+            --architects-color: #34495e;
+            --community-color: #e74c3c;
         }
 
-        * {
-            box-sizing: border-box;
-        }
+        * { box-sizing: border-box; }
 
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Nunito', sans-serif;
             margin: 0;
             background-color: var(--background-color);
             color: var(--secondary-color);
-            line-height: 1.6;
+            line-height: 1.7;
         }
         
-        body.modal-open {
-            overflow: hidden; /* Prevent background scrolling when modal is open */
-        }
+        body.modal-open { overflow: hidden; }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
 
-        .header {
-            text-align: center;
-            padding: 40px 20px;
-            border-bottom: 1px solid var(--border-color);
-        }
+        .header { text-align: center; padding: 40px 20px; }
+        .header .logo { font-size: 3.5rem; font-weight: 900; color: var(--primary-color); margin: 0; line-height: 1; }
+        .header h1 { margin-top: 30px; font-size: 2.5rem; color: #333; font-weight: 900; }
+        .header p { font-size: 1.2rem; max-width: 700px; margin: 10px auto 0; }
 
-        .header .logo {
-            font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary-color);
-            margin: 0;
-            line-height: 1;
-        }
+        .audience-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; }
+        .audience-card { background-color: var(--card-bg-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px; text-align: center; cursor: pointer; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .audience-card:hover { transform: translateY(-10px) scale(1.03); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+        .audience-card h3 { margin-top: 0; font-size: 1.6rem; font-weight: 900; }
+        .audience-card i { font-size: 3rem; margin-bottom: 20px; transition: transform 0.3s ease; }
+        .audience-card:hover i { transform: scale(1.2); }
 
-        .header .tagline {
-            font-size: 1.2rem;
-            color: var(--secondary-color);
-            margin-top: 5px;
-            font-weight: 600;
-        }
-        
-        .header h1 {
-            margin-top: 30px;
-            font-size: 2rem;
-            color: #333;
-        }
-        
-        .header p {
-            font-size: 1.1rem;
-            max-width: 700px;
-            margin: 10px auto 0;
-        }
-
-        .audience-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin-top: 40px;
-        }
-
-        .audience-card {
-            background-color: var(--card-bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-        }
-
-        .audience-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 20px rgba(0,0,0,0.1);
-        }
-        
-        .audience-card h3 {
-            margin-top: 0;
-            color: var(--primary-color);
-            font-size: 1.4rem;
-        }
+        .card-parks { color: var(--parks-color); border-bottom: 5px solid var(--parks-color); }
+        .card-schools { color: var(--schools-color); border-bottom: 5px solid var(--schools-color); }
+        .card-architects { color: var(--architects-color); border-bottom: 5px solid var(--architects-color); }
+        .card-community { color: var(--community-color); border-bottom: 5px solid var(--community-color); }
         
         /* Modal Styles */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 1000;
-        }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease; z-index: 1000; }
+        .modal-overlay.visible { opacity: 1; visibility: visible; }
+        .modal-page { background-color: var(--card-bg-color); width: 95%; max-width: 1200px; height: 90vh; border-radius: 16px; display: flex; flex-direction: column; overflow: hidden; transform: translateY(20px); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+        .modal-overlay.visible .modal-page { transform: translateY(0); }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 25px; border-bottom: 1px solid var(--border-color); background: #fdfdfd; }
+        .modal-title { font-size: 1.2rem; font-weight: 700; color: #333; }
+        .modal-close { font-size: 1.8rem; color: #888; cursor: pointer; background: none; border: none; transition: transform 0.2s; }
+        .modal-close:hover { transform: rotate(90deg); color: #333; }
+        .modal-body { flex-grow: 1; overflow-y: auto; padding: 0; }
 
-        .modal-overlay.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: var(--card-bg-color);
-            padding: 40px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 900px;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-        }
+        /* General Page Styles */
+        .page-hero { padding: 80px 40px; color: white; text-align: center; background-size: cover; background-position: center; }
+        .page-hero h1 { font-size: 3rem; font-weight: 900; margin: 0 0 10px; text-shadow: 2px 2px 8px rgba(0,0,0,0.6); }
+        .page-hero p { font-size: 1.3rem; max-width: 650px; margin: 0 auto; text-shadow: 1px 1px 4px rgba(0,0,0,0.7); }
+        .page-content { padding: 40px 50px; }
+        .btn { display: inline-block; padding: 15px 35px; color: white; font-weight: 700; text-decoration: none; border-radius: 50px; transition: transform 0.2s ease, box-shadow 0.3s ease; border: none; cursor: pointer; font-size: 1.1rem; }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
         
-        .modal-overlay.visible .modal-content {
-            transform: scale(1);
-        }
+        /* Expert & SEO Notes */
+        .expert-note { background-color: var(--expert-note-bg); border: 1px solid var(--expert-note-border); border-left: 5px solid var(--expert-note-border); padding: 15px 20px; border-radius: 8px; margin: 30px 0; }
+        .expert-note h4 { margin: 0 0 10px; color: #c48a00; font-size: 1.1rem; font-weight: 700; }
+        .seo-preview { border: 1px solid #ddd; border-radius: 8px; padding: 15px; margin: 20px 0; background: #fff; max-width: 600px; font-family: Arial, sans-serif; }
+        .seo-preview .url { color: #006621; font-size: 14px; }
+        .seo-preview .title { color: #1a0dab; font-size: 20px; font-weight: normal; text-decoration: none; }
+        .seo-preview .description { font-size: 14px; color: #545454; }
 
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            font-size: 2.5rem;
-            font-weight: bold;
-            color: #aaa;
-            cursor: pointer;
-            line-height: 1;
-        }
-        
-        .modal-close:hover {
-            color: #333;
-        }
-
-        .modal-content h2 {
-            font-size: 2.2rem;
-            color: var(--primary-color);
-            margin-top: 0;
-            border-bottom: 2px solid var(--accent-color);
-            padding-bottom: 10px;
-        }
-        
-        .modal-content p {
-            font-size: 1.1rem;
-        }
-
-        .content-split {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-top: 20px;
-        }
+        /* Link Mapping Section */
+        .resources-section { background-color: #f8f9fa; padding: 40px; border-radius: 12px; margin-top: 40px; }
+        .resources-section h2 { text-align: center; font-weight: 900; font-size: 2rem; margin-top: 0; margin-bottom: 30px; }
+        .resource-links-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .resource-link-item { background: #fff; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); text-decoration: none; color: var(--secondary-color); transition: transform 0.2s, box-shadow 0.2s; display: block; }
+        .resource-link-item:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.07); }
+        .resource-link-item i { font-size: 1.5rem; margin-right: 10px; }
+        .resource-link-item h4 { margin: 0 0 5px; font-size: 1.1rem; display: flex; align-items: center; }
+        .resource-link-item p { margin: 0; font-size: 0.9rem; color: #777; }
 
         @media (max-width: 768px) {
-            .content-split {
-                grid-template-columns: 1fr;
-            }
-             .modal-content {
-                padding: 25px;
-            }
-        }
-
-        .content-split h4 {
-            font-size: 1.3rem;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .resource-list, .enhancement-list {
-            list-style: none;
-            padding: 0;
-        }
-        
-        .resource-list li, .enhancement-list li {
-            margin-bottom: 12px;
-            padding-left: 28px;
-            position: relative;
-        }
-
-        .resource-list li::before {
-            content: '🔗';
-            color: var(--primary-color);
-            position: absolute;
-            left: 0;
-            top: 2px;
-        }
-
-        .enhancement-list li {
-            background-color: var(--enhancement-bg);
-            padding: 10px 15px 10px 35px;
-            border-radius: 8px;
-            border-left: 4px solid var(--accent-color);
-        }
-
-        .enhancement-list li::before {
-            content: '💡';
-            color: var(--accent-color);
-            position: absolute;
-            left: 10px;
-            top: 12px;
-        }
-
-        .resource-list a {
-            text-decoration: none;
-            color: var(--primary-color);
-            font-weight: 600;
-            transition: color 0.2s;
-        }
-
-        .resource-list a:hover {
-            color: #333;
-            text-decoration: underline;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            margin-top: 40px;
-            font-size: 0.9rem;
-            color: #888;
+            .page-hero h1 { font-size: 2.2rem; }
+            .page-content { padding: 20px; }
         }
     </style>
 </head>
@@ -248,172 +102,140 @@
 
     <header class="header">
         <div class="container">
-            <h2 class="logo">Burke</h2>
-            <p class="tagline">PLAY THAT MOVES YOU</p>
-            <h1>Audience Journey Prototype</h1>
-            <p>This interactive demo showcases the proposed audience-centric web experience. Select a role below to view the tailored landing page strategy designed for their specific needs.</p>
+            <div class="logo">Burke</div>
+            <h1>Visionary Audience Prototype</h1>
+            <p>An expert-level demonstration of tailored audience journeys. This interactive prototype blends professional design with a playful spirit, and clearly maps existing web pages to the new, strategic layouts.</p>
         </div>
     </header>
 
     <main class="container">
         <section id="audience-selector">
             <div class="audience-grid">
-                <!-- Card 1 -->
-                <div class="audience-card" data-target="parks-rec">
-                    <h3>Parks & Recreation</h3>
-                    <p>For municipal departments focused on community engagement, durability, and public fitness.</p>
-                </div>
-                <!-- Card 2 -->
-                <div class="audience-card" data-target="schools-daycares">
-                    <h3>Schools & Daycares</h3>
-                    <p>For educators focused on child development, safety, and integrating play with learning.</p>
-                </div>
-                <!-- Card 3 -->
-                <div class="audience-card" data-target="architects">
-                    <h3>Landscape Architects</h3>
-                    <p>For design professionals who need technical specs, CAD files, and aesthetic flexibility.</p>
-                </div>
-                <!-- Card 4 -->
-                <div class="audience-card" data-target="community">
-                    <h3>HOAs, Churches & PTOs</h3>
-                    <p>For community leaders who need budget-friendly solutions and fundraising support.</p>
-                </div>
+                <div class="audience-card card-parks" data-target="parks-rec"><i class="fa-solid fa-tree-city"></i><h3>Parks & Rec</h3><p>Community impact, durability, and public fitness solutions.</p></div>
+                <div class="audience-card card-schools" data-target="schools"><i class="fa-solid fa-school"></i><h3>Schools & Daycares</h3><p>Child development, safety compliance, and learning through play.</p></div>
+                <div class="audience-card card-architects" data-target="architects"><i class="fa-solid fa-drafting-compass"></i><h3>Landscape Architects</h3><p>Technical specs, design resources, and creative inspiration.</p></div>
+                <div class="audience-card card-community" data-target="community"><i class="fa-solid fa-users"></i><h3>Community Groups</h3><p>Fundraising help, easy planning, and volunteer-led project support.</p></div>
             </div>
         </section>
     </main>
 
-    <!-- Modal Dialogs -->
+    <!-- MODAL PROTOTYPES -->
     <div id="parks-rec-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <h2>Audience: Parks & Recreation</h2>
-            <p><strong>Page Description:</strong> This page is tailored for municipal park and recreation departments and public space planners. It will emphasize BCI Burke's expertise in creating durable, safe, and engaging play environments that serve diverse community needs, from active play to inclusive design and fitness solutions.</p>
-            <div class="content-split">
-                <div>
-                    <h4>Current Resources</h4>
-                    <ul class="resource-list">
-                        <li><a href="https://www.bciburke.com/markets/park-playground-equipment/" target="_blank">Park Playground Equipment</a></li>
-                        <li><a href="https://www.bciburke.com/products/outdoor-fitness/" target="_blank">Outdoor Fitness</a></li>
-                        <li><a href="https://www.bciburke.com/products/dog-park-equipment/" target="_blank">Dog Park Equipment</a></li>
-                        <li><a href="https://www.bciburke.com/design-ideas/inclusive-playground-design/" target="_blank">Inclusive Playground Design</a></li>
-                        <li><a href="https://www.bciburke.com/products/site-amenities/" target="_blank">Site Amenities</a></li>
-                    </ul>
+        <div class="modal-page">
+            <div class="modal-header"><div class="modal-title">Vision Page: Parks & Recreation</div><button class="modal-close">&times;</button></div>
+            <div class="modal-body">
+                <div class="page-hero" style="background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1600055140232-4de97584341b?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200');">
+                    <h1>Build Playgrounds That Build Communities</h1>
+                    <p>Discover durable, inclusive, and engaging play and fitness solutions designed for the demands of public use.</p>
+                    <a href="#" class="btn" style="background-color: var(--parks-color);">Explore Park Projects</a>
                 </div>
-                <div>
-                    <h4>Proposed Enhancements</h4>
-                    <ul class="enhancement-list">
-                        <li>Develop a "Funding & Grants" resource center.</li>
-                        <li>Showcase ROI/Impact studies on community engagement.</li>
-                        <li>Highlight sustainability and eco-friendly materials.</li>
-                        <li>Create in-depth guides on maintenance for high-traffic areas.</li>
-                        <li>Feature video testimonials from Park Directors.</li>
-                    </ul>
+                <div class="page-content">
+                    <div class="expert-note"><h4><i class="fa-solid fa-lightbulb"></i> Expert Rationale</h4><p>This page leads with a powerful, benefit-driven headline. The content immediately showcases successful projects to build credibility and provides clear pathways to product information and funding resources—the two primary needs of this audience.</p></div>
+                    
+                    <div class="resources-section">
+                        <h2>Key Resources & Next Steps</h2>
+                        <div class="resource-links-grid">
+                            <a href="https://www.bciburke.com/markets/park-playground-equipment/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-tree" style="color:var(--parks-color)"></i>Park Playgrounds</h4><p>View our full range of durable equipment.</p></a>
+                            <a href="https://www.bciburke.com/products/outdoor-fitness/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-person-running" style="color:var(--parks-color)"></i>Outdoor Fitness</h4><p>Solutions for active, multi-generational spaces.</p></a>
+                            <a href="https://www.bciburke.com/design-ideas/inclusive-playground-design/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-universal-access" style="color:var(--parks-color)"></i>Inclusive Play</h4><p>Designs that welcome everyone in the community.</p></a>
+                             <a href="https://www.bciburke.com/resources/purchasing-contracts/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-file-signature" style="color:var(--parks-color)"></i>Purchasing & Contracts</h4><p>Simplify the procurement process.</p></a>
+                        </div>
+                    </div>
+
+                    <div class="expert-note"><h4><i class="fa-solid fa-magnifying-glass"></i> SEO Preview</h4><div class="seo-preview"><div class="url">https://www.bciburke.com › markets › parks-recreation</div><a href="#" class="title">Durable Park Playground Equipment & Fitness | BCI Burke</a><div class="description">BCI Burke designs commercial-grade playground equipment, outdoor fitness solutions, and site amenities for public parks. Explore projects and simplify purchasing.</div></div></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div id="schools-daycares-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <h2>Audience: Schools & Daycares</h2>
-            <p><strong>Page Description:</strong> This page is for school administrators, PTOs, and daycare directors. It will highlight how BCI Burke provides educational, safe, and developmentally appropriate play structures that support physical, social-emotional, and cognitive development.</p>
-            <div class="content-split">
-                <div>
-                    <h4>Current Resources</h4>
-                    <ul class="resource-list">
-                         <li><a href="https://www.bciburke.com/markets/school-playground-equipment/" target="_blank">School Playground Equipment</a></li>
-                        <li><a href="https://www.bciburke.com/markets/childcare-playground-equipment/" target="_blank">Childcare Playground Equipment</a></li>
-                        <li><a href="https://www.bciburke.com/design-ideas/outdoor-classroom-gallery/" target="_blank">Outdoor Classroom Gallery</a></li>
-                        <li><a href="https://www.bciburke.com/products/playground-equipment/early-childhood-play/" target="_blank">Early Childhood Play (6-23 mo)</a></li>
-                        <li><a href="https://www.bciburke.com/resources/fund-your-playground/" target="_blank">Fund Your Playground</a></li>
-                    </ul>
+    <div id="schools-modal" class="modal-overlay">
+        <div class="modal-page">
+            <div class="modal-header"><div class="modal-title">Vision Page: Schools & Daycares</div><button class="modal-close">&times;</button></div>
+            <div class="modal-body">
+                <div class="page-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1574681329228-32b0a79adf42?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200');">
+                    <h1>Play That Powers Learning</h1>
+                    <p>Safe, compliant, and educationally-rich play environments for every age and stage of development.</p>
+                    <a href="#" class="btn" style="background-color: var(--schools-color);">Filter by Age Group</a>
                 </div>
-                <div>
-                    <h4>Proposed Enhancements</h4>
-                    <ul class="enhancement-list">
-                        <li>Filter solutions by specific age groups (preschool, elementary).</li>
-                        <li>Provide curriculum integration ideas for educators.</li>
-                        <li>Build a comprehensive fundraising support toolkit for PTOs.</li>
-                        <li>Add testimonials from teachers and educators.</li>
-                        <li>Offer detailed guides on safety and compliance standards.</li>
-                    </ul>
+                <div class="page-content">
+                    <div class="expert-note"><h4><i class="fa-solid fa-lightbulb"></i> Expert Rationale</h4><p>Educators are focused on safety and developmental outcomes. This design immediately lets them self-segment by age group. The "Key Resources" section provides direct access to the most critical information: specific products, classroom integration, and funding help.</p></div>
+
+                     <div class="resources-section">
+                        <h2>Key Resources & Next Steps</h2>
+                        <div class="resource-links-grid">
+                            <a href="https://www.bciburke.com/products/playground-equipment/early-childhood-play/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-baby" style="color:var(--schools-color)"></i>Early Childhood (0-5)</h4><p>See our developmentally appropriate solutions.</p></a>
+                            <a href="https://www.bciburke.com/markets/school-playground-equipment/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-graduation-cap" style="color:var(--schools-color)"></i>Schools (K-12)</h4><p>Equipment for active, learning-focused play.</p></a>
+                            <a href="https://www.bciburke.com/design-ideas/outdoor-classroom-gallery/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-leaf" style="color:var(--schools-color)"></i>Outdoor Classrooms</h4><p>Get inspired to take learning outside.</p></a>
+                             <a href="https://www.bciburke.com/resources/fund-your-playground/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-hand-holding-dollar" style="color:var(--schools-color)"></i>Funding Resources</h4><p>Find grants and financing options.</p></a>
+                        </div>
+                    </div>
+                    
+                    <div class="expert-note"><h4><i class="fa-solid fa-magnifying-glass"></i> SEO Preview</h4><div class="seo-preview"><div class="url">https://www.bciburke.com › markets › education</div><a href="#" class="title">School & Daycare Playground Equipment | BCI Burke</a><div class="description">Find safe and educational playground equipment for schools, daycares, and early childhood centers. Our products meet all CPSC and ASTM safety standards.</div></div></div>
                 </div>
             </div>
         </div>
     </div>
 
     <div id="architects-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <h2>Audience: Landscape Architects</h2>
-            <p><strong>Page Description:</strong> This page targets professional landscape architects and design firms. It will focus on innovative design, aesthetic integration, and collaborative partnership, showcasing customizable products, high-quality materials, and essential technical specifications.</p>
-            <div class="content-split">
-                <div>
-                    <h4>Current Resources</h4>
-                    <ul class="resource-list">
-                        <li><a href="https://www.bciburke.com/markets/landscape-architect-playgrounds/" target="_blank">Landscape Architect Playgrounds</a></li>
-                        <li><a href="https://www.bciburke.com/resources/continuing-education/" target="_blank">Continuing Education</a></li>
-                        <li><a href="https://www.bciburke.com/design-ideas/photo-gallery/" target="_blank">Photo Gallery (Inspiration)</a></li>
-                        <li><a href="https://www.bciburke.com/design-ideas/playground-color-selector/" target="_blank">Playground Color Selector</a></li>
-                        <li><a href="https://www.bciburke.com/resources/catalogs/" target="_blank">Catalogs</a></li>
-                    </ul>
+        <div class="modal-page">
+            <div class="modal-header"><div class="modal-title">Vision Page: Landscape Architects</div><button class="modal-close">&times;</button></div>
+            <div class="modal-body">
+                <div class="page-hero" style="background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1416339158484-9637228cc908?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200');">
+                    <h1>Design That Inspires.<br>Resources That Deliver.</h1>
+                    <p>Your vision, realized. Access all the tools you need to specify BCI Burke with confidence.</p>
+                    <a href="#" class="btn" style="background-color: var(--architects-color);">Access Design Files</a>
                 </div>
-                <div>
-                    <h4>Proposed Enhancements</h4>
-                    <ul class="enhancement-list">
-                        <li>Create a dedicated portal for downloadable CAD/BIM files.</li>
-                        <li>Build a curated design gallery for inspiration.</li>
-                        <li>Provide detailed material palettes and customization options.</li>
-                        <li>Offer accredited Continuing Education Units (CEUs) via webinars.</li>
-                        <li>Clearly outline the project collaboration and support process.</li>
-                    </ul>
+                 <div class="page-content">
+                    <div class="expert-note"><h4><i class="fa-solid fa-lightbulb"></i> Expert Rationale</h4><p>This is a no-fluff, resource-first design. Architects need technical files, and the primary CTA takes them there immediately. The resource grid is organized like a dashboard, allowing them to quickly find the exact tool or information they need to move their project forward.</p></div>
+
+                    <div class="resources-section">
+                        <h2>Specifier & Design Dashboard</h2>
+                        <div class="resource-links-grid">
+                            <a href="https://www.bciburke.com/resources/catalogs/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-download" style="color:var(--architects-color)"></i>CAD & BIM Files</h4><p>Download design assets for your plans.</p></a>
+                            <a href="https://www.bciburke.com/design-ideas/playground-color-selector/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-palette" style="color:var(--architects-color)"></i>Color & Materials</h4><p>View detailed specifications and palettes.</p></a>
+                            <a href="https://www.bciburke.com/resources/catalogs/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-book-open" style="color:var(--architects-color)"></i>Digital Catalogs</h4><p>Browse our complete product lines.</p></a>
+                             <a href="https://www.bciburke.com/resources/continuing-education/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-chalkboard-user" style="color:var(--architects-color)"></i>CEU Courses</h4><p>Fulfill your continuing education credits.</p></a>
+                        </div>
+                    </div>
+                    
+                    <div class="expert-note"><h4><i class="fa-solid fa-magnifying-glass"></i> SEO Preview</h4><div class="seo-preview"><div class="url">https://www.bciburke.com › resources › architects</div><a href="#" class="title">Playground Design Files & Specs for Architects | BCI Burke</a><div class="description">Access CAD blocks, BIM models, product specifications, and color palettes for commercial playgrounds. Partner with BCI Burke on your next project.</div></div></div>
                 </div>
             </div>
         </div>
     </div>
     
     <div id="community-modal" class="modal-overlay">
-        <div class="modal-content">
-            <span class="modal-close">&times;</span>
-            <h2>Audience: HOAs, Churches & PTOs</h2>
-            <p><strong>Page Description:</strong> Tailored for community leaders and volunteers, this page addresses the challenges of developing communal play spaces. It focuses on budget-friendly solutions, fundraising support, and ease of project management to foster community spirit.</p>
-            <div class="content-split">
-                <div>
-                    <h4>Current Resources</h4>
-                    <ul class="resource-list">
-                        <li><a href="https://www.bciburke.com/markets/apartment-hoa-playground-equipment/" target="_blank">Apartment & HOA Playgrounds</a></li>
-                        <li><a href="https://www.bciburke.com/markets/church-playground-equipment/" target="_blank">Church Playgrounds</a></li>
-                        <li><a href="https://www.bciburke.com/resources/planning-your-playground/" target="_blank">Planning Your Playground</a></li>
-                        <li><a href="https://www.bciburke.com/resources/fund-your-playground/" target="_blank">Fund Your Playground</a></li>
-                        <li><a href="https://www.bciburke.com/resources/purchasing-contracts/" target="_blank">Purchasing Contracts</a></li>
-                    </ul>
+        <div class="modal-page">
+            <div class="modal-header"><div class="modal-title">Vision Page: Community Groups</div><button class="modal-close">&times;</button></div>
+            <div class="modal-body">
+                <div class="page-hero" style="background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1620306351239-17cf5b6a7ea7?ixlib=rb-4.0.3&q=85&fm=jpg&crop=entropy&cs=srgb&w=1200');">
+                    <h1>Your Community Project, Made Simple.</h1>
+                    <p>We're here to help your HOA, church, or parent group every step of the way, from fundraising to ribbon cutting.</p>
+                    <a href="#" class="btn" style="background-color: var(--community-color);">Download Free Fundraising Kit</a>
                 </div>
-                <div>
-                    <h4>Proposed Enhancements</h4>
-                    <ul class="enhancement-list">
-                        <li>Offer downloadable fundraising toolkits and templates.</li>
-                        <li>Provide volunteer installation guides and checklists.</li>
-                        <li>Create an interactive project planning and budgeting tool.</li>
-                        <li>Showcase community success stories and testimonials.</li>
-                        <li>Simplify information on navigating project approvals.</li>
-                    </ul>
+                <div class="page-content">
+                    <div class="expert-note"><h4><i class="fa-solid fa-lightbulb"></i> Expert Rationale</h4><p>Volunteer groups need guidance and confidence. This page is structured as a supportive, step-by-step journey. The links are phrased as actions ("Start Planning," "Get Funding") to make the process feel manageable and clear.</p></div>
+                    
+                    <div class="resources-section">
+                        <h2>Your Project Toolkit</h2>
+                        <div class="resource-links-grid">
+                            <a href="https://www.bciburke.com/resources/planning-your-playground/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-list-check" style="color:var(--community-color)"></i>Start Planning</h4><p>Use our guides to define your goals.</p></a>
+                            <a href="https://www.bciburke.com/resources/fund-your-playground/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-hand-holding-dollar" style="color:var(--community-color)"></i>Get Funding</h4><p>Access our popular fundraising kit and ideas.</p></a>
+                            <a href="https://www.bciburke.com/markets/church-playground-equipment/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-church" style="color:var(--community-color)"></i>Church Playgrounds</h4><p>See projects designed for faith organizations.</p></a>
+                             <a href="https://www.bciburke.com/markets/apartment-hoa-playground-equipment/" target="_blank" class="resource-link-item"><h4><i class="fa-solid fa-house-user" style="color:var(--community-color)"></i>HOA Playgrounds</h4><p>Solutions for neighborhood communities.</p></a>
+                        </div>
+                    </div>
+
+                    <div class="expert-note"><h4><i class="fa-solid fa-magnifying-glass"></i> SEO Preview</h4><div class="seo-preview"><div class="url">https://www.bciburke.com › community-projects</div><a href="#" class="title">Playground Fundraising & Planning for Communities | BCI Burke</a><div class="description">Get expert help for your HOA, church, or PTO playground project. Access free fundraising kits, planning guides, and see budget-friendly playground options.</div></div></div>
                 </div>
             </div>
         </div>
     </div>
-
-
-    <footer class="footer">
-        <p>BCI Burke Audience Journey Prototype | Confidential</p>
-    </footer>
-
+    
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const cards = document.querySelectorAll('.audience-card');
             const body = document.body;
-
-            cards.forEach(card => {
+            document.querySelectorAll('.audience-card').forEach(card => {
                 card.addEventListener('click', function() {
                     const targetId = this.getAttribute('data-target') + '-modal';
                     const modal = document.getElementById(targetId);
@@ -424,23 +246,31 @@
                 });
             });
 
+            function closeModal(modal) {
+                modal.classList.remove('visible');
+                body.classList.remove('modal-open');
+            }
+
             document.querySelectorAll('.modal-close').forEach(button => {
                 button.addEventListener('click', function() {
-                    this.closest('.modal-overlay').classList.remove('visible');
-                    body.classList.remove('modal-open');
+                    closeModal(this.closest('.modal-overlay'));
                 });
             });
 
             document.querySelectorAll('.modal-overlay').forEach(overlay => {
                 overlay.addEventListener('click', function(event) {
                     if (event.target === this) {
-                        this.classList.remove('visible');
-                        body.classList.remove('modal-open');
+                        closeModal(this);
                     }
                 });
             });
+            
+            document.addEventListener('keydown', function(event) {
+                if (event.key === "Escape") {
+                    document.querySelectorAll('.modal-overlay.visible').forEach(closeModal);
+                }
+            });
         });
     </script>
-
 </body>
 </html>
